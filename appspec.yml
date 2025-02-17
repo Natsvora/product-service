@@ -4,6 +4,6 @@ Resources:
       Type: AWS::Lambda::Function
       Properties:
         Name: "product-service-stg"
-        Alias: "live"
+        Alias: "product-service-stg"
         CurrentVersion: "1"
-        TargetVersion: "1"
+        TargetVersion: "2"
