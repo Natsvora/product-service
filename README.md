@@ -12,7 +12,6 @@ This project is a **serverless microservice** that manages product information f
 - **AWS CodePipeline for CI/CD**
 - **Deployed using AWS CodePipeline**
 - **DynamoDB as the database**
-
 ---
 
 ## 📁 Project Structure
