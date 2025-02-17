@@ -7,16 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-app.use((req, res, next) => {
-
-  if (Buffer.isBuffer(req.body)) {
-    req.body = JSON.parse(req.body.toString("utf-8"));
-  }
-
-  next();
-})
-
 // Mount Routes
 app.use("/api/v1/products", productRoutes);
 

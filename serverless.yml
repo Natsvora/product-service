@@ -15,3 +15,10 @@ functions:
 
 plugins:
   - serverless-offline
+  - serverless-esbuild
+
+custom:
+  esbuild:
+    bundle: true
+    minify: false
+    sourcemap: true

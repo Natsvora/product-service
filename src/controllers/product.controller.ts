@@ -16,6 +16,7 @@ const productService = new ProductService();
  */
 export const createProduct = async (req: Request, res: Response) => {
   try {
+    req.body = JSON.parse(req.body.toString("utf-8"));
     const { Name, Description, Price, Category, Stock } = req.body;
 
     if (!Name || !Price || !Category || Stock === undefined) {
