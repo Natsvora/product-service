@@ -21,4 +21,5 @@ phases:
 artifacts:
   files:
     - "*.zip"
+    - appspec.yml
   discard-paths: yes
