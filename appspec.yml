@@ -5,5 +5,5 @@ Resources:
       Properties:
         Name: "product-service-stg"
         Alias: "product-service-stg"
-        CurrentVersion: "2"
-        TargetVersion: "3"
+        CurrentVersion: "1"
+        TargetVersion: "2"
