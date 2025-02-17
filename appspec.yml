@@ -6,3 +6,4 @@ Resources:
         Name: "product-service-stg"
         Alias: "live"
         CurrentVersion: "1"
+        TargetVersion: "1"
