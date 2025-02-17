@@ -1,0 +1,24 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20.18.3
+    commands:
+      - npm install -g serverless
+  pre_build:
+    commands:
+      - echo "Installing dependencies..."
+      - npm install
+  build:
+    commands:
+      - echo "Packaging the Lambda function..."
+      - serverless package  # Generates deployment package inside `.serverless/`
+  post_build:
+    commands:
+      - echo "Copying packaged zip file..."
+      - cp .serverless/build/*.zip .  # Copies the ZIP file to root for CodePipeline
+artifacts:
+  files:
+    - "*.zip"
+  discard-paths: yes
