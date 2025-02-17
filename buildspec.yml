@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       nodejs: 20.18.3
     commands:
-      - npm install -g serverless
+      - npm install -g serverless@3.40.0
   pre_build:
     commands:
       - echo "Installing dependencies..."
@@ -17,7 +17,7 @@ phases:
   post_build:
     commands:
       - echo "Copying packaged zip file..."
-      - cp .serverless/build/*.zip .  # Copies the ZIP file to root for CodePipeline
+      - cp .serverless/*.zip .  # Copies the ZIP file to root for CodePipeline
 artifacts:
   files:
     - "*.zip"
