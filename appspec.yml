@@ -4,6 +4,6 @@ Resources:
       Type: AWS::Lambda::Function
       Properties:
         Name: "product-service-stg"
-        Alias: "product-service-stg"
-        CurrentVersion: "1"
-        TargetVersion: "2"
+        Alias: "stg"
+        CurrentVersion: "3"
+        TargetVersion: "4"
