@@ -5,4 +5,4 @@ Resources:
       Properties:
         Name: "product-service-stg"
         Alias: "live"
-        CurrentVersion: "$LATEST"
+        CurrentVersion: "1"
