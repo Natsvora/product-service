@@ -42,6 +42,30 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 /**
+ * Retrieves a paginated list of products.
+ *
+ * @param req - The request object containing optional query parameters for pagination:
+ *              `limit` to specify the maximum number of products to retrieve,
+ *              and `offset` to determine the starting point for the result set.
+ * @param res - The response object used to send the list of products or an error message.
+ * @returns A JSON response with the list of products and their total count,
+ *          or a 500 error message if the retrieval fails.
+ */
+export const getProducts = async (req: Request, res: Response) => {
+  try {
+    const { limit, offset } = req.query;
+    const parsedLimit = parseInt(limit as string, 10) || 10;
+    const parsedOffset = parseInt(offset as string, 10) || 0;
+
+    const products = await productService.listProducts(parsedLimit, parsedOffset);
+    res.status(200).json(products);
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: "Failed to fetch products" });
+  }
+};
+
+/**
  * Retrieves a product by its ID.
  *
  * @param req - The request object, which must contain the ID of the product

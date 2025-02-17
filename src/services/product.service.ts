@@ -1,4 +1,4 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import {
   DynamoDBDocumentClient,
   GetCommand,
@@ -10,6 +10,7 @@ import {
 import { Product } from "../models/product.model";
 import logger from "../utils/logger";
 import { PRODUCTS_TABLE, REGION, TAXONOMY_TABLE } from "../types/constant";
+import { convertToObject } from "../utils/helper";
 
 const client = new DynamoDBClient({
   region: REGION,
@@ -42,6 +43,39 @@ export class ProductService {
     if (!tags || tags.length === 0) return true; // No tags to validate
     const tagChecks = await Promise.all(tags.map(async (tagId) => this.categoryExists(tagId)));
     return tagChecks.every((exists) => exists);
+  }
+
+  /**
+   * Retrieves a paginated list of products from the database.
+   *
+   * @param limit - The maximum number of products to retrieve.
+   * @param offset - The number of products to skip before starting to collect the result set.
+   * @returns An object containing the array of retrieved products and the total count of products.
+   * @throws Logs an error if the retrieval fails and returns an empty list with a count of zero.
+   */
+  async listProducts(limit: number, offset: number) {
+    const params = {
+      TableName: PRODUCTS_TABLE,
+      Limit: limit,
+    };
+
+    try {
+      const data = await docClient.send(new ScanCommand(params));
+
+      const paginatedItems = data.Items
+        ? data.Items.slice(offset, offset + limit).map((data) => convertToObject(data))
+        : [];
+      const totalCount = data.Items ? data.Items.length : 0;
+
+      logger.info(`Fetched ${paginatedItems.length} products from DynamoDB`);
+      return {
+        items: paginatedItems,
+        totalCount,
+      };
+    } catch (error) {
+      logger.error("Error fetching products:", error);
+      return { items: [], totalCount: 0 };
+    }
   }
 
   /**
